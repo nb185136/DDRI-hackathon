@@ -31,7 +31,10 @@ namespace DDRI.Services
 
         public async Task<Product> Delete(int productId)
         {
-            return new Product();
+            var obj = _db.Products.Where(x => x.ID == productId).ToList().FirstOrDefault();
+            _db.Products.Remove(obj);
+            _db.SaveChanges();
+            return obj;
         }
 
         public async Task<Product> Update(Product product)
@@ -51,12 +54,14 @@ namespace DDRI.Services
 
         public async Task<IList<Product>> Get()
         {
-            return new List<Product>();
+            var a = _db.Products.ToList();
+            return a;
         }
 
         public async Task<Product> GetProductById(int productId)
         {
-            return new Product();
+            var obj = _db.Products.Where(x => x.ID == productId).ToList().FirstOrDefault();
+            return obj;
         }
     }
 }

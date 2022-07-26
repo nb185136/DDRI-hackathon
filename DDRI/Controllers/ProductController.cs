@@ -11,31 +11,28 @@ namespace DDRI.Controllers
     [RoutePrefix("api/Product")]
     public class ProductController : ApiController
     {
-        DDRIEntities db = new DDRIEntities();
         Services.ProductService _product = new Services.ProductService();
 
         [Route("addorupdate")]
         [HttpPost]
-        public async Task<IHttpActionResult> Create(Product pto)
+        public async Task<IHttpActionResult> AddorUpdate(Product pto)
         {
             try
             {
 
                 if (pto.ID == 0)
                 {
-                    await _product.Create(new Product()
-                    {
-                    });
-
+                    var result = await _product.Create(pto);
+                    return Ok(result);
 
                 }
                 else
                 {
-                    await _product.Update(new Product()
-                    {
-                    });
+                    var result = await _product.Update(pto);
+                    return Ok(result);
+
                 }
-                return Ok();
+                
             }
             catch (Exception ex)
             {
@@ -50,26 +47,24 @@ namespace DDRI.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> Get()
         {
-            var a = db.Customers.ToList();
-            return Ok();
+            var result = await _product.Get();
+            return Ok(result);
         }
 
         [Route("detailById")]
         [HttpGet]
-        public async Task<IHttpActionResult> GetCustomerbyId(int id)
+        public async Task<IHttpActionResult> GetProductbyId(int id)
         {
-            var obj = db.Customers.Where(x => x.Id == id).ToList().FirstOrDefault();
-            return Ok();
+            var result = await _product.GetProductById(id);
+            return Ok(result);
         }
 
         [Route("delete")]
         [HttpDelete]
         public async Task<IHttpActionResult> delete(int id)
         {
-            var obj = db.Customers.Where(x => x.Id == id).ToList().FirstOrDefault();
-            db.Customers.Remove(obj);
-            db.SaveChanges();
-            return Ok();
+            var result = await _product.Delete(id);
+            return Ok(result);
         }
 
     }

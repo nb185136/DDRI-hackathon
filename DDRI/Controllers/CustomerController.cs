@@ -11,7 +11,6 @@ namespace DDRI.Controllers
     [RoutePrefix("api/Customer")]
     public class CustomerController : ApiController
     {
-        DDRIEntities db = new DDRIEntities();
         Services.CustomerService _customer = new Services.CustomerService();
 
         [Route("addorUpdate")]
@@ -23,20 +22,16 @@ namespace DDRI.Controllers
 
                 if (cto.Id == 0)
                 {
-                    await _customer.Add(new Customer()
-                    {
-                    });
-
+                    var result = await _customer.Add(cto);
+                    return Ok(result);
 
                 }
                 else
                 {
-                    await _customer.Edit(new Customer()
-                    {
-                    });
-
+                   var result = await _customer.Edit(cto);
+                    return Ok(result);
                 }
-                return Ok();
+                
             }
             catch (Exception ex)
             {
@@ -51,24 +46,24 @@ namespace DDRI.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> Get()
         {
-            await _customer.Get();
-            return Ok();
+            var result = await _customer.Get();
+            return Ok(result);
         }
 
         [Route("detailById")]
         [HttpGet]
         public async Task<IHttpActionResult> GetCustomerbyId(int id)
         {
-            await _customer.GetCustomerById(id);
-            return Ok();
+            var result = await _customer.GetCustomerById(id);
+            return Ok(result);
         }
 
         [Route("delete")]
         [HttpDelete]
         public async Task<IHttpActionResult> delete(int id)
         {
-            await _customer.Delete(id);
-            return Ok();
+            var result = await _customer.Delete(id);
+            return Ok(result);
         }
 
     }
