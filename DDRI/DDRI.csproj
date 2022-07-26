@@ -133,6 +133,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -167,10 +168,10 @@
     <Compile Include="Models\OrderRequestModel.cs" />
     <Compile Include="Models\OrderResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\Customer.cs" />
+    <Compile Include="Services\CustomerService.cs" />
     <Compile Include="Services\Interfaces\ICustomer.cs" />
     <Compile Include="Services\OrderService.cs" />
-    <Compile Include="Services\Product.cs" />
+    <Compile Include="Services\ProductService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

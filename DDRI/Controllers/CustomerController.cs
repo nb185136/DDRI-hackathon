@@ -12,7 +12,7 @@ namespace DDRI.Controllers
     public class CustomerController : ApiController
     {
         DDRIEntities db = new DDRIEntities();
-        Services.Customer _customer = new Services.Customer();
+        Services.CustomerService _customer = new Services.CustomerService();
 
         [Route("addorUpdate")]
         [HttpPost]
@@ -23,7 +23,7 @@ namespace DDRI.Controllers
 
                 if (cto.Id == 0)
                 {
-                    await _customer.AddorEdit(new Customer()
+                    await _customer.Add(new Customer()
                     {
                     });
 
@@ -31,15 +31,10 @@ namespace DDRI.Controllers
                 }
                 else
                 {
-                    var obj = db.Customers.Where(x => x.Id == cto.Id).ToList().FirstOrDefault();
-                    if (obj.Id > 0)
+                    await _customer.Edit(new Customer()
                     {
+                    });
 
-                        obj.FirstName = cto.FirstName;
-                        obj.LastName = cto.LastName;
-                        obj.Address = cto.Address;
-                        db.SaveChanges();
-                    }
                 }
                 return Ok();
             }
@@ -56,7 +51,7 @@ namespace DDRI.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> Get()
         {
-            var a = db.Customers.ToList();
+            await _customer.Get();
             return Ok();
         }
 
@@ -64,7 +59,7 @@ namespace DDRI.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> GetCustomerbyId(int id)
         {
-            var obj = db.Customers.Where(x => x.Id == id).ToList().FirstOrDefault();
+            await _customer.GetCustomerById(id);
             return Ok();
         }
 
@@ -72,9 +67,7 @@ namespace DDRI.Controllers
         [HttpDelete]
         public async Task<IHttpActionResult> delete(int id)
         {
-            var obj = db.Customers.Where(x => x.Id == id).ToList().FirstOrDefault();
-            db.Customers.Remove(obj);
-            db.SaveChanges();
+            await _customer.Delete(id);
             return Ok();
         }
 
