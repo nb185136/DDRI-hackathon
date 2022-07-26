@@ -133,12 +133,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\CustomerDto.cs" />
     <Compile Include="DBObjects\Customer.cs">
       <DependentUpon>DDRIModels.tt</DependentUpon>
     </Compile>
@@ -166,9 +164,13 @@
     <Compile Include="DBObjects\Product.cs">
       <DependentUpon>DDRIModels.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CartItems.cs" />
+    <Compile Include="Models\OrderRequestModel.cs" />
+    <Compile Include="Models\OrderResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Customer.cs" />
     <Compile Include="Services\Interfaces\ICustomer.cs" />
+    <Compile Include="Services\OrderService.cs" />
     <Compile Include="Services\Product.cs" />
   </ItemGroup>
   <ItemGroup>
