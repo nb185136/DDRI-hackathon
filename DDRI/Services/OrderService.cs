@@ -115,12 +115,18 @@ namespace DDRI.Services
             try
             {
                 var order = _db.Orders.Where(t => t.IsCanceled != true && t.ID == orderId).FirstOrDefault();
-
-                if (order.ETAMin == null)
+                order.DeliveredMins = delieveredInMins.ToString();
+                if (!string.IsNullOrEmpty(order.DeliveredMins))
                 {
-                    var differenceMins = int.Parse(order.ETAMin) - delieveredInMins;
-                    var customer = _db.Customers.Where(t => t.Id == order.CustomerId).FirstOrDefault();
-                    customer.RewardPoints += differenceMins*int.Parse(_rewardValue);
+                    int etaMinsConv = int.Parse(order.ETAMin);
+
+                    if (etaMinsConv < delieveredInMins)
+                    {
+                        var differenceMins = delieveredInMins - etaMinsConv;
+                        var customer = _db.Customers.Where(t => t.Id == order.CustomerId).FirstOrDefault();
+                        customer.RewardPoints += differenceMins * int.Parse(_rewardValue);
+                    }
+                    
                 }
 
                 _db.SaveChanges();
