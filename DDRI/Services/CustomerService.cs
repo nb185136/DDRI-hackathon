@@ -13,6 +13,12 @@ namespace DDRI.Services
         {
             _db = new DDRIEntities();
         }
+
+        public  DBObjects.Customer Login(DBObjects.Customer customer)
+        {
+            var log = _db.Customers.Where(x => x.Email.Equals(customer.Email) && x.Password.Equals(customer.Password)).FirstOrDefault();
+            return log;
+        }
         public async Task<DBObjects.Customer> Add(DBObjects.Customer customer)
         {
             Customer c = new Customer();
