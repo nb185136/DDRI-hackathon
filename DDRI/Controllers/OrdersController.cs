@@ -21,11 +21,11 @@ namespace DDRI.Controllers
         //
         [Route("Customer/{customerId}/Create")]
         [HttpPost]
-        public async Task<IHttpActionResult> Create(int customerId, [FromBody] OrderRequestModel items)
+        public async Task<IHttpActionResult> Create(int customerId, [FromBody] IEnumerable<CartItems> items)
         {
             try
             {
-                var result = await _orderService.Create(customerId, items);
+                var result = await _orderService.Create(customerId, items.ToList());
                 return Ok(result);
             }
             catch (Exception ex)
