@@ -116,6 +116,7 @@ namespace DDRI.Services
             {
                 var order = _db.Orders.Where(t => t.IsCanceled != true && t.ID == orderId).FirstOrDefault();
                 order.DeliveredMins = delieveredInMins.ToString();
+                order.IsDelivered = true;
                 if (!string.IsNullOrEmpty(order.DeliveredMins))
                 {
                     int etaMinsConv = int.Parse(order.ETAMin);
