@@ -8,7 +8,8 @@ namespace DDRI.Models
 {
     public class OrderRequestModel
     {
-        public List<Product> products { get; set; }
+        public int DeliveryMins { get; set; }
+        public List<CartItems> Products { get; set; }
 
 
     }

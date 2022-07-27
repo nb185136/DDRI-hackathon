@@ -17,7 +17,7 @@ namespace DDRI.Services
         {
             _db = new DDRIEntities();
         }
-        public async Task<OrderResponse> Create(int customerId, IList<CartItems> cartItems)
+        public async Task<OrderResponse> Create(int customerId, OrderRequestModel orderRqst)
         {
             try
             {
@@ -35,18 +35,17 @@ namespace DDRI.Services
                         IsCanceled = false,
                         DeliveredOn = null,
                         UpdatedOn = DateTime.Now,
-                        ETAMin = cartItems.DeliveryMins.ToString(),
+                        ETAMin = orderRqst.DeliveryMins.ToString(),
                         DeliveredMins=null,
                         IsDelivered=false
-
-                 
+                        s
                     };
 
                     _db.Orders.Add(order);
                     _db.SaveChanges();
 
                     // create order items
-                    foreach (var item in cartItems)
+                    foreach (var item in orderRqst.Products)
                     {
                         var orderItem = _db.OrderItems.Add(new OrderItem
                         {
@@ -55,7 +54,7 @@ namespace DDRI.Services
                             price = item.Price,
                             CreatedOn = DateTime.Now,
                             Quantity = item.Quantity,
-                            UpdatedOn = DateTime.Now
+                            UpdatedOn = DateTime.Now,
                         });
                     }
 
@@ -66,7 +65,7 @@ namespace DDRI.Services
                         var result = new OrderResponse()
                         {
                             EstimatedDeliveryDate = DateTime.Now,
-                            CartItems = cartItems.Products.ToList(),
+                            CartItems = orderRqst.Products.ToList(),
                             OrderId = order.ID
                         };
 
