@@ -10,8 +10,20 @@ namespace DDRI.Controllers
 {
     [RoutePrefix("api/Customer")]
     public class CustomerController : ApiController
-    {
+    {   
         Services.CustomerService _customer = new Services.CustomerService();
+        [Route("login")]
+        [HttpPost]
+        public IHttpActionResult Login(Customer login)
+        {
+            var result = _customer.Login(login);
+            if (result == null)
+            {
+                return Ok(new { status = 401, isSuccess = false, message = "Invalid User", });
+            }
+            else
+            return Ok(new { status = 200, isSuccess = true, message = "User Login successfully", Customer = result });
+        }
 
         [Route("addorUpdate")]
         [HttpPost]
