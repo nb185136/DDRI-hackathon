@@ -34,10 +34,16 @@ namespace DDRI.Services
                         CreatedOn = DateTime.Now,
                         IsCanceled = false,
                         DeliveredOn = null,
-                        UpdatedOn = DateTime.Now
+                        UpdatedOn = DateTime.Now,
+                        ETAMin = cartItems.DeliveryMins.ToString(),
+                        DeliveredMins=null,
+                        IsDelivered=false
+
+                 
                     };
 
                     _db.Orders.Add(order);
+                    _db.SaveChanges();
 
                     // create order items
                     foreach (var item in cartItems.Products)
@@ -60,7 +66,7 @@ namespace DDRI.Services
                         var result = new OrderResponse()
                         {
                             EstimatedDeliveryDate = DateTime.Now,
-                            CartItems = cartItems.ToList(),
+                            CartItems = cartItems.Products.ToList(),
                             OrderId = order.ID
                         };
 

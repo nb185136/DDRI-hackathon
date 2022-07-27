@@ -25,6 +25,7 @@ namespace DDRI.Services
                 return new CustomerResponseModel()
                 {
                     isAdmin = customerDetails.Email.ToLower() == _adminUsers.ToLower(),
+                    Id=customerDetails.Id,
                     Email = customerDetails.Email,
                     Address = customerDetails.Address,
                     City = customerDetails.City,
