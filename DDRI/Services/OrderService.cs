@@ -38,7 +38,6 @@ namespace DDRI.Services
                         ETAMin = orderRqst.DeliveryMins.ToString(),
                         DeliveredMins=null,
                         IsDelivered=false
-                        s
                     };
 
                     _db.Orders.Add(order);
@@ -111,19 +110,36 @@ namespace DDRI.Services
             }
         }
 
-        public async Task<Order> AddRewardtoOrder(int orderId, DateTime deliveredOn)
+        public async Task<Order> AddRewardtoOrder(int orderId, int delieveredInMins)
         {
             try
             {
                 var order = _db.Orders.Where(t => t.IsCanceled != true && t.ID == orderId).FirstOrDefault();
 
-                if (order.EstimatedDeliveryDate != null && order.EstimatedDeliveryDate < deliveredOn)
+                if (order.ETAMin == null)
                 {
+                    var differenceMins = int.Parse(order.ETAMin) - delieveredInMins;
                     var customer = _db.Customers.Where(t => t.Id == order.CustomerId).FirstOrDefault();
-                    customer.RewardPoints += int.Parse(_rewardValue);
-                    _db.SaveChanges();
+                    customer.RewardPoints += differenceMins*int.Parse(_rewardValue);
                 }
+
+                _db.SaveChanges();
+
                 return await Task.FromResult<Order>(order);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error while retrieving orders");
+                return null;
+            }
+        }
+
+        public async Task<Order> GetOrderbyId(int orderId)
+        {
+            try
+            {
+                var result = _db.Orders.Where(t => t.IsCanceled != true && t.ID == orderId).FirstOrDefault();
+                return await Task.FromResult<Order>(result);
             }
             catch (Exception ex)
             {
