@@ -21,5 +21,8 @@ namespace DDRI.DBObjects
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public Nullable<System.DateTime> UpdatedOn { get; set; }
         public Nullable<bool> IsCanceled { get; set; }
+        public string ETAMin { get; set; }
+        public string DeliveredMins { get; set; }
+        public Nullable<bool> IsDelivered { get; set; }
     }
 }
