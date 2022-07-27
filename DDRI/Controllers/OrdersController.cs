@@ -67,6 +67,22 @@ namespace DDRI.Controllers
         }
 
         [HttpGet]
+        [Route("{id}")]
+        public async Task<IHttpActionResult> GetOrderbyId(int id)
+        {
+            try
+            {
+                var result = await _orderService.GetOrderbyId(id);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return Ok((int)HttpStatusCode.InternalServerError);
+            }
+
+        }
+
+        [HttpGet]
         [Route("{id}/DeliveredOn/{deliveredOn}")]
         public async Task<IHttpActionResult> AddRewardtoDelayedOrder(int orderId, DateTime deliveredOn)
         {

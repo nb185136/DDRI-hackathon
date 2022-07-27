@@ -130,5 +130,19 @@ namespace DDRI.Services
                 return null;
             }
         }
+
+        public async Task<Order> GetOrderbyId(int orderId)
+        {
+            try
+            {
+                var result = _db.Orders.Where(t => t.IsCanceled != true && t.ID == orderId).FirstOrDefault();
+                return await Task.FromResult<Order>(result);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error while retrieving orders");
+                return null;
+            }
+        }
     }
 }
