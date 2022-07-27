@@ -38,7 +38,6 @@ namespace DDRI.Services
                         ETAMin = orderRqst.DeliveryMins.ToString(),
                         DeliveredMins=null,
                         IsDelivered=false
-                        s
                     };
 
                     _db.Orders.Add(order);
