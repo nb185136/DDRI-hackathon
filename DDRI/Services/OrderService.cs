@@ -22,6 +22,8 @@ namespace DDRI.Services
                 //get customer
                 var customerExist = _db.Customers.Any(t => t.Id == customerId);
 
+                var customer = _db.Customers.Where(t => t.Id == customerId).FirstOrDefault();
+
                 if (customerExist)
                 {
                     // create order

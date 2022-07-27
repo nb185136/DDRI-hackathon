@@ -85,3 +85,6 @@ C:\Hackathon\SourceCode\DDRI\obj\Debug\DDRI.csproj.CopyComplete
 C:\Hackathon\SourceCode\DDRI\obj\Debug\DDRI.dll
 C:\Hackathon\SourceCode\DDRI\obj\Debug\DDRI.pdb
 C:\Hackathon\SourceCode\DDRI\obj\Debug\DDRI.csproj.AssemblyReference.cache
+C:\Hackathon\SourceCode\DDRI\bin\System.Web.Cors.dll
+C:\Hackathon\SourceCode\DDRI\bin\System.Web.Http.Cors.dll
+C:\Hackathon\SourceCode\DDRI\bin\System.Web.Http.Cors.xml

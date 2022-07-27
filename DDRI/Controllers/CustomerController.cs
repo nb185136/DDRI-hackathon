@@ -15,7 +15,7 @@ namespace DDRI.Controllers
 
         [Route("addorUpdate")]
         [HttpPost]
-        public async Task<IHttpActionResult> AddorEdit(Customer cto)
+        public async Task<IHttpActionResult> AddorEdit([FromBody] Customer cto)
         {
             try
             {

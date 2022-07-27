@@ -1,5 +1,4 @@
-﻿using DDRI.DBObjects;
-using DDRI.Models;
+﻿using DDRI.Models;
 using DDRI.Services;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,8 @@ using System.Web.Http;
 
 namespace DDRI.Controllers
 {
-    [Route("customer/{controller}")]
+    //[Route("api/customer/[controller]")]
+    [RoutePrefix("api/Orders/Customer")]
     public class OrdersController : ApiController
     {
         public OrderService _orderService = null;
@@ -18,9 +18,10 @@ namespace DDRI.Controllers
         {
             _orderService = new OrderService();
         }
-        [Route("{customerId}/create")]
+        //
+        [Route("{customerId}/Create")]
         [HttpPost]
-        public async Task<IHttpActionResult> Create(int customerId, [FromBody]IEnumerable<CartItems> items)
+        public async Task<IHttpActionResult> Create(int customerId, [FromBody] IEnumerable<CartItems> items)
         {
             try
             {
