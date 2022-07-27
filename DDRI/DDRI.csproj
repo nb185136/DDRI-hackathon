@@ -171,6 +171,7 @@
       <DependentUpon>DDRIModels.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CartItems.cs" />
+    <Compile Include="Models\CustomerResponseModel.cs" />
     <Compile Include="Models\OrderRequestModel.cs" />
     <Compile Include="Models\OrderResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

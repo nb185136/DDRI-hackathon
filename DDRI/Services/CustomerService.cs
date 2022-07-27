@@ -1,6 +1,8 @@
 ﻿using DDRI.DBObjects;
+using DDRI.Models;
 using DDRI.Services.interfaces;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,15 +11,36 @@ namespace DDRI.Services
     public class CustomerService
     {
         private DDRIEntities _db = null;
+        string _adminUsers = ConfigurationManager.AppSettings["SysAdmin"];
         public CustomerService()
         {
             _db = new DDRIEntities();
         }
 
-        public  DBObjects.Customer Login(DBObjects.Customer customer)
+        public CustomerResponseModel Login(DBObjects.Customer customer)
         {
-            var log = _db.Customers.Where(x => x.Email.Equals(customer.Email) && x.Password.Equals(customer.Password)).FirstOrDefault();
-            return log;
+            var customerDetails = _db.Customers.Where(x => x.Email.Equals(customer.Email) && x.Password.Equals(customer.Password)).FirstOrDefault();
+            if (customerDetails != null)
+            {
+                return new CustomerResponseModel()
+                {
+                    isAdmin = customerDetails.Email.ToLower() == _adminUsers.ToLower(),
+                    Email = customerDetails.Email,
+                    Address = customerDetails.Address,
+                    City = customerDetails.City,
+                    FirstName = customerDetails.FirstName,
+                    LastName = customerDetails.LastName,
+                    Phone = customerDetails.Phone,
+                    RewardPoints = customerDetails.RewardPoints,
+                    State = customerDetails.State,
+                    UserName = customerDetails.UserName,
+                    Password = customerDetails.Password
+                };
+            }
+            else
+            {
+                return null;
+            }
         }
         public async Task<DBObjects.Customer> Add(DBObjects.Customer customer)
         {

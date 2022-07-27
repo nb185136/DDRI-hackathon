@@ -10,7 +10,7 @@ using System.Web.Http;
 namespace DDRI.Controllers
 {
     //[Route("api/customer/[controller]")]
-    [RoutePrefix("api/Orders/Customer")]
+    [RoutePrefix("api/Orders")]
     public class OrdersController : ApiController
     {
         public OrderService _orderService = null;
@@ -19,13 +19,60 @@ namespace DDRI.Controllers
             _orderService = new OrderService();
         }
         //
-        [Route("{customerId}/Create")]
+        [Route("Customer/{customerId}/Create")]
         [HttpPost]
         public async Task<IHttpActionResult> Create(int customerId, [FromBody] IEnumerable<CartItems> items)
         {
             try
             {
                 var result = await _orderService.Create(customerId, items.ToList());
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return Ok((int)HttpStatusCode.InternalServerError);
+            }
+
+        }
+
+        [HttpGet]
+        public async Task<IHttpActionResult> GetOrders()
+        {
+            try
+            {
+                var result = await _orderService.GetOrders();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return Ok((int)HttpStatusCode.InternalServerError);
+            }
+
+        }
+
+        [HttpGet]
+        [Route("Customer/{customerId}")]
+        public async Task<IHttpActionResult> GetOrdersbyCustomerId(int customerId)
+        {
+            try
+            {
+                var result = await _orderService.GetOrderbyCustomerId(customerId);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return Ok((int)HttpStatusCode.InternalServerError);
+            }
+
+        }
+
+        [HttpGet]
+        [Route("{id}/DeliveredOn/{deliveredOn}")]
+        public async Task<IHttpActionResult> AddRewardtoDelayedOrder(int orderId, DateTime deliveredOn)
+        {
+            try
+            {
+                var result = await _orderService.AddRewardtoOrder(orderId, deliveredOn);
                 return Ok(result);
             }
             catch (Exception ex)
