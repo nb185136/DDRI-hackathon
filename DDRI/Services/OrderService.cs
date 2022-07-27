@@ -17,7 +17,7 @@ namespace DDRI.Services
         {
             _db = new DDRIEntities();
         }
-        public async Task<OrderResponse> Create(int customerId, IList<CartItems> cartItems)
+        public async Task<OrderResponse> Create(int customerId, OrderRequestModel cartItems)
         {
             try
             {
@@ -30,7 +30,7 @@ namespace DDRI.Services
                     Order order = new Order()
                     {
                         CustomerId = customerId,
-                        EstimatedDeliveryDate = new DateTime(),
+                        EstimatedDeliveryDate = DateTime.Now.AddMinutes(cartItems.DeliveryMins),
                         CreatedOn = DateTime.Now,
                         IsCanceled = false,
                         DeliveredOn = null,
@@ -40,7 +40,7 @@ namespace DDRI.Services
                     _db.Orders.Add(order);
 
                     // create order items
-                    foreach (var item in cartItems)
+                    foreach (var item in cartItems.Products)
                     {
                         var orderItem = _db.OrderItems.Add(new OrderItem
                         {
