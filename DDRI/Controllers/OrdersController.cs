@@ -84,11 +84,11 @@ namespace DDRI.Controllers
 
         [HttpGet]
         [Route("{id}/DeliveredOn/{deliveredOn}")]
-        public async Task<IHttpActionResult> AddRewardtoDelayedOrder(int orderId, DateTime deliveredOn)
+        public async Task<IHttpActionResult> AddRewardtoDelayedOrder(int orderId, int deliveredInMins)
         {
             try
             {
-                var result = await _orderService.AddRewardtoOrder(orderId, deliveredOn);
+                var result = await _orderService.AddRewardtoOrder(orderId, deliveredInMins);
                 return Ok(result);
             }
             catch (Exception ex)
